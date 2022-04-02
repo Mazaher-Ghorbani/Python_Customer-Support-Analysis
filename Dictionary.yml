@@ -1,0 +1,49 @@
+models:
+- name: contacts
+  description: a transaction table containing Customer Service (CS) contacts.
+  columns:
+    - id: ID of the contact.
+    - cs_tag: Shows all tags according to CS standard.
+    - channel: Channel on which the contact arrived. Call or chat.
+    - channel_type: More specific type within the channel.
+    - contact_language: Contact language from the customer side.
+    - cst_initiated: Boolean value indicates whether the contact was initiated by customer. False is on email cases when the case session was opened without an incoming email from customer.
+    - abandoned: Boolean value that indicates whether the contact has been abandoned before connecting to the specialist.
+    - is_inhouse: Whether the specialist contacted is from company or an external customer care center.
+    - initiated_date: Timestamp when the contact dropped into the queue and started waiting for support.
+    - contact_date: Timestamp when customer was connected to support (chat and call) or when the case got closed (email)
+    - product: product/membership customer had at initiated_date. Is NULL for non-customers.
+    - wait_time: Waiting time in the queue.
+    - handle_time: Duration in seconds of the specialist handling time.
+    - specialist_id: Id of the specialist taking the request.
+    - user_id: ID of the user making the contact.
+    - link_id: Link to back-office tables.
+
+- name: specialists
+  description: a dimension table containing information about CS specialists.
+  columns:
+    - id: Identifier for the specialist.
+    - is_inhouse: Whether the Specialist is hired by company or comes from an external center.
+    - hired_at: When the specialist was hired.
+    - full_name: Name of the specialist.
+
+- name: users
+  description: a dimensions table containing information about company customers.
+  columns:
+      - id: User_id.
+      - signed_up_at: Timestamp when the user signed up.
+      - has_activated_card: Whether the individual activated their card.
+      - closed_account_at:  Timestamp when the user closed the account.
+      - tnc_country_group: Country for terms and conditions.
+      - os: OS on which they consulted the app.
+      - first_name: First name of the user.
+      - last_name: Last name of the user.
+
+- name: surveys
+  description: a transaction table containing survey responses.
+  columns:
+    - contact_id: ID of the contact who initiated the survey. 
+    - response_date: Date when the customer responded to survey.
+    - agent_satisfaction: Answer to a question - how do you evaluate the specialist? On scale 1-10.
+    - csat: Customer SATisfaction from 1 to 10.
+    - issue_resolved: Boolean indicating whether the issue was resolved.
